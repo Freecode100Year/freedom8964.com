@@ -1,13 +1,8 @@
 {
- "updated": "2026-10-24",
- "day": "2026-10-24",
+ "updated": "2026-10-25",
+ "day": "2026-10-25",
  "cursor": 125,
- "added": [
-  {
-   "kind": "videos",
-   "url": "https://www.youtube.com/watch?v=eN5CvOn7yAE"
-  }
- ],
+ "added": [],
  "errors": [
   "公视新闻网 PNN：六四事件: 0 条",
   "The Washington Post: HTTP 502"
