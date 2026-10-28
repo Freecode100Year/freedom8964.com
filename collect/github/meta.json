@@ -1,10 +1,9 @@
 {
- "day": "2026-10-27",
+ "day": "2026-10-28",
  "cursor": 125,
  "added": [],
  "errors": [
   "公视新闻网 PNN：六四事件: 0 条",
-  "香港独立媒体: HTTP 403",
   "The Washington Post: HTTP 502",
   "民间历史档案库 China Unofficial Archives: HTTP 403"
  ],
@@ -12,5 +11,5 @@
  "pending": [],
  "retry": [],
  "srcRetry": [],
- "updated": "2026-10-27"
+ "updated": "2026-10-28"
 }
