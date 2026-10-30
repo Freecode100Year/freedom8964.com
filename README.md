@@ -24,6 +24,15 @@ GitHub Pages 镜像（每天随 GitHub 自动采集更新）：https://freecode1
 
 ## 构建与部署
 
+推送页面、资源、采集模板或 Worker 代码到 `main` 后，GitHub Actions 会自动构建并部署 GitHub Pages 镜像与 Cloudflare Worker。每日备份/采集流程也会在采集后更新 GitHub Pages 镜像。
+
+首次启用 Cloudflare 自动部署前，在 GitHub 仓库 **Settings → Secrets and variables → Actions** 中添加：
+
+- `CLOUDFLARE_API_TOKEN`：具有该账户 Workers Scripts 编辑权限的 API Token。
+- `CLOUDFLARE_ACCOUNT_ID`：Cloudflare 账户 ID。
+
+未配置上述 secrets 时，Cloudflare 部署步骤会明确跳过；GitHub Pages 镜像仍会照常部署。手动本地部署仍可运行：
+
 ```bash
 sudo apt install python3-opencc      # 繁體转换
 python3 build.py                     # 生成 dist/

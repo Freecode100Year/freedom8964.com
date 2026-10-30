@@ -1,0 +1,53 @@
+name: 发布 Cloudflare Worker
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cloudflare-deploy.yml'
+      - 'pages/**'
+      - 'assets/**'
+      - 'collect/core.js'
+      - 'collect/render.js'
+      - 'build.py'
+      - 'worker.js'
+      - 'wrangler.jsonc'
+      - '_headers'
+      - '_redirects'
+      - 'robots.txt'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cloudflare-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: 检查 Cloudflare 凭据
+        id: credentials
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$CF_API_TOKEN" ] && [ -n "$CF_ACCOUNT_ID" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "跳过 Cloudflare 部署：请在仓库 Actions secrets 中设置 CLOUDFLARE_API_TOKEN 和 CLOUDFLARE_ACCOUNT_ID。"
+          fi
+      - name: 安装 OpenCC
+        if: steps.credentials.outputs.configured == 'true'
+        run: sudo apt-get install -y -qq python3-opencc >/dev/null || pip install opencc
+      - name: 构建网站
+        if: steps.credentials.outputs.configured == 'true'
+        run: python3 build.py
+      - name: 部署 Worker 和静态资源
+        if: steps.credentials.outputs.configured == 'true'
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

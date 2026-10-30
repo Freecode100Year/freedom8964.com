@@ -4,6 +4,20 @@
 # 运行在 GitHub 上，不依赖任何服务器；失败时 GitHub 会发邮件通知仓库主人。
 name: 每日备份、监控、采集与镜像
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'pages/**'
+      - 'assets/**'
+      - 'collect/**'
+      - 'build.py'
+      - 'worker.js'
+      - 'wrangler.jsonc'
+      - '_headers'
+      - '_redirects'
+      - 'robots.txt'
+      - 'README.md'
   schedule:
     - cron: "30 10 * * *"   # UTC 10:30 = 美东 05:30/06:30（网站 03:00 采集之后）
   workflow_dispatch:
@@ -19,6 +33,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   backup:
+    if: ${{ github.event_name != 'push' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -76,7 +91,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: master
+          ref: main
           fetch-depth: 0   # build.py 用提交历史算“最后更新”日期
       - uses: actions/setup-node@v4
         with:
