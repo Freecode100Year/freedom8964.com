@@ -23,18 +23,20 @@
 
 ---
 
-### Task 1: Enable Main Branch Pages Deployment
+### Task 1: Enable Main Branch Deployment
 
 **Files:**
 - Modify: `.github/workflows/backup.yml`
 - Create: `.github/workflows/cloudflare-deploy.yml`
 - Modify: `README.md`
 
-- [ ] Add `main` push trigger for site source and page data changes.
-- [ ] Keep push-triggered deployment separate from collection and backup jobs.
-- [ ] Change scheduled Pages checkout from `master` to `main`.
-- [ ] Deploy the Cloudflare Worker on source pushes when both Cloudflare secrets are set.
-- [ ] Document the two required Cloudflare secrets.
-- [ ] Validate workflow syntax, trigger paths, and branch refs.
-- [ ] Build the Pages artifact and verify representative routes exist.
-- [ ] Push `main`, set it as the repository default, and inspect its deployment run.
+- [x] Add `main` push trigger for site source and page data changes.
+- [x] Keep push-triggered deployment separate from collection and backup jobs.
+- [x] Change scheduled Pages checkout from `master` to `main`.
+- [x] Deploy the Cloudflare Worker on source pushes when both Cloudflare secrets are set.
+- [x] Document the two required Cloudflare secrets.
+- [x] Validate workflow syntax, trigger paths, and branch refs.
+- [x] Build the Pages artifact and verify representative routes exist.
+- [x] Push `main`, set it as the repository default, and inspect its deployment run.
+
+The GitHub `github-pages` environment originally allowed deployments only from `master`; `main` was added to its branch policy after the first automatic deployment was rejected. The resulting Pages run and live `zh`, `zh-hant`, and `en` mirror routes were verified.
