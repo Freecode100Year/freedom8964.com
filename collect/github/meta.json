@@ -1,5 +1,5 @@
 {
- "day": "2026-10-29",
+ "day": "2026-10-30",
  "cursor": 125,
  "added": [],
  "errors": [
@@ -9,7 +9,16 @@
  ],
  "rejected": [],
  "pending": [],
- "retry": [],
+ "retry": [
+  {
+   "title": "I Covered the Tiananmen Square Massacre. It Still Weighs on Me.",
+   "url": "https://www.nytimes.com/2026/10/30/world/asia/china-tiananmen-kristof.html",
+   "date": "2026-10-30",
+   "kind": "articles",
+   "outlet": "The New York Times",
+   "tries": 1
+  }
+ ],
  "srcRetry": [],
- "updated": "2026-10-29"
+ "updated": "2026-10-30"
 }
