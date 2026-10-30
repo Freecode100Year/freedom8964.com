@@ -1,8 +1,14 @@
 {
- "updated": "2026-10-29",
- "day": "2026-10-29",
+ "updated": "2026-10-30",
+ "day": "2026-10-30",
  "cursor": 125,
- "added": [],
+ "added": [
+  {
+   "kind": "wiki",
+   "title": "天安门母亲群体",
+   "url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E5%AE%89%E9%97%A8%E6%AF%8D%E4%BA%B2%E7%BE%A4%E4%BD%93"
+  }
+ ],
  "errors": [
   "公视新闻网 PNN：六四事件: 0 条",
   "The Washington Post: HTTP 502"
