@@ -1,14 +1,8 @@
 {
- "updated": "2026-11-02",
- "day": "2026-11-02",
+ "updated": "2026-11-03",
+ "day": "2026-11-03",
  "cursor": 125,
- "added": [
-  {
-   "kind": "articles",
-   "title": "在天安门屠杀现场，我目睹了中国人民非凡的勇气",
-   "url": "https://cn.nytimes.com/china/20261102/china-tiananmen-kristof/"
-  }
- ],
+ "added": [],
  "errors": [
   "公视新闻网 PNN：六四事件: 0 条",
   "The Washington Post: HTTP 502"
