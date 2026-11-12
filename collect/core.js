@@ -128,9 +128,13 @@ async function verify(c, sub) {
   if (c.kind === "videos") {
     const o = await sub("https://www.youtube.com/oembed?format=json&url=" + encodeURIComponent(c.url));
     if (!o.ok) return false;
-    const d = await o.json();
-    c.title = d.title; c.channel = d.author_name; c.channel_url = d.author_url;
-    return true;
+    const d = await o.json().catch(() => ({}));
+    // oEmbed 偶尔返回 200 却没有标题和频道（视频还在处理等）：沿用订阅源里的标题和频道名；
+    // 仍然没有标题就当作这次没核实成功，次日重试（连续 3 天不成功就不收），不会再存进空标题。
+    c.title = d.title || c.title;
+    c.channel = d.author_name || c.channel || c.outlet;
+    c.channel_url = d.author_url || c.channel_url;
+    return Boolean(c.title);
   }
   if (c.kind === "x") {
     const r = await sub(`https://cdn.syndication.twimg.com/tweet-result?id=${c.id}&token=a`);
@@ -179,6 +183,12 @@ async function collectStep(env, db, meta, today, sub, used) {
       else { c.tries = (c.tries || 0) + 1; (c.tries < MAX_TRIES ? meta.retry : meta.rejected).push(c); }
     }
   };
+
+  // 以前存进去的空标题视频（oEmbed 当时没给标题）：每次补查几条，取到标题和频道就补上
+  for (const v of db.videos.filter((x) => !x.title).slice(0, 3)) {
+    const c = { kind: "videos", url: v.url };
+    try { if (await verify(c, sub)) Object.assign(v, { title: c.title, channel: c.channel, channel_url: c.channel_url }); } catch {}
+  }
 
   meta.pending = meta.pending.filter((c) => c.kind !== "x");
   meta.retry = (meta.retry || []).filter((c) => c.kind !== "x");

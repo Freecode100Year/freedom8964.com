@@ -11,11 +11,12 @@ function renderList(items, kind, lang) {
   const sorted = [...items].sort((a, b) => (b.added + b.date).localeCompare(a.added + a.date)).slice(0, 150);
   const lis = sorted.map((x) => {
     const u = esc(x.url);
+    // 缺标题或频道的旧条目：标题用网址代替，没有频道就不显示“频道”（以前会显示成 undefined）
     let meta = kind === "videos"
-      ? `${l.channel}<a href="${esc(x.channel_url)}" rel="noopener noreferrer" target="_blank">${esc(x.channel)}</a>`
+      ? (x.channel ? (x.channel_url ? `${l.channel}<a href="${esc(x.channel_url)}" rel="noopener noreferrer" target="_blank">${esc(x.channel)}</a>` : l.channel + esc(x.channel)) : "")
       : esc(x.outlet || (kind === "cdt" ? "中国数字时代" : ""));
-    if (x.date) meta += ` · ${esc(x.date)}`;
-    return `  <li><div class="t"><a href="${u}" rel="noopener noreferrer" target="_blank">${esc(x.title)}</a></div><div class="c">${meta} · ${u}</div></li>`;
+    if (x.date) meta += `${meta ? " · " : ""}${esc(x.date)}`;
+    return `  <li><div class="t"><a href="${u}" rel="noopener noreferrer" target="_blank">${esc(x.title || x.url)}</a></div><div class="c">${meta ? meta + " · " : ""}${u}</div></li>`;
   }).join("\n");
   return `<h2 id="${kind === "cdt" ? "cdt-new" : kind}">${l[kind]} <span class="muted small">${lang === "en" ? ` (${sorted.length})` : `（${sorted.length}）`}</span></h2>\n<ul class="vlist">\n${lis || `  <li class="muted">${l.none}</li>`}\n</ul>`;
 }
@@ -27,7 +28,7 @@ const NEW_HEAD = { zh: "最近自动新增", "zh-hant": "最近自動新增", en
 const NEW_NOTE = { zh: "网站每天自动采集，每条都打开核实过才加入。", "zh-hant": "網站每天自動採集，每條都打開核實過才加入。", en: "Collected automatically each day; every link was opened and verified before being added." };
 const li = (x, src) => {
   const u = esc(x.url);
-  return `  <li><div class="t"><a href="${u}" rel="noopener noreferrer" target="_blank">${esc(x.title)}</a></div><div class="c">${esc(src || "")}${x.date ? " · " + esc(x.date) : ""} · ${u}</div></li>`;
+  return `  <li><div class="t"><a href="${u}" rel="noopener noreferrer" target="_blank">${esc(x.title || x.url)}</a></div><div class="c">${esc(src || "")}${x.date ? " · " + esc(x.date) : ""} · ${u}</div></li>`;
 };
 const GROUP = { cdt: { zh: "中国数字时代", en: "China Digital Times" }, reports: { zh: "X（推特）：#你没看过的六四 系列图片展", en: "X (Twitter): #你没看过的六四" } };
 // 页面顶部“最近自动新增”：按来源分组折叠，最新的在前
