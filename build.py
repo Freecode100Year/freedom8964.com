@@ -16,6 +16,7 @@ import opencc
 ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
 SITE = "https://freedom8964.com"
+VPN_URL = "https://github.com/Freecode100Year/UltraLightBrowser/releases/latest"  # 导航栏“免费VPN翻墙浏览器”
 
 
 def last_updated():
@@ -45,6 +46,7 @@ LOCALES = {
 T = {
     "zh": {
         "nav": ["首页", "大事记", "遇难者", "史料", "香港烛光", "纪念馆", "影像", "报道", "媒体专题", "维基", "中国数字时代", "最新", "关于"],
+        "vpn": "免费VPN翻墙浏览器",
         "pages": {
             "index.html": ("自由 · 八九六四", "六四事件相关信息的采集、整理与归档导航。本站不生产内容，每条记录指向原始出处。"),
             "timeline.html": ("大事记", "1989 年 4 月至 6 月的日期记录，附出处。"),
@@ -70,6 +72,7 @@ T = {
     },
     "en": {
         "nav": ["Home", "Chronology", "Victims", "Records", "Hong Kong", "Museum", "Video", "Press", "Media archives", "Wiki", "CDT", "Latest", "About"],
+        "vpn": "Free VPN Browser",
         "pages": {
             "index.html": ("Freedom · June Fourth 1989", "A directory for collecting, organising and archiving information about June Fourth 1989. Every record points to its original source."),
             "timeline.html": ("Chronology", "Dated records, April to June 1989, with sources."),
@@ -130,7 +133,7 @@ def layout(loc, file, body):
     nav = "\n".join(
         f'      <a href="{up}{LOCALES[loc]["prefix"]}{f}"{" aria-current=\"page\"" if f == file else ""}>{label}</a>'
         for f, label in zip(FILES, s["nav"])
-    )
+    ) + f'\n      <a href="{VPN_URL}" rel="noopener">{s["vpn"]}</a>'  # 关于 后面：免费翻墙浏览器 UltraLightBrowser
     langs = "\n".join(
         f'      <a href="{up}{LOCALES[l]["prefix"]}{file if file != "404.html" else "index.html"}" data-setlang="{l}" hreflang="{LOCALES[l]["lang"]}" lang="{LOCALES[l]["lang"]}"'
         f'{" aria-current=\"true\"" if l == loc else ""}>{LOCALES[l]["label"]}</a>'
