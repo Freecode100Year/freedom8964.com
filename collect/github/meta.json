@@ -1,11 +1,11 @@
 {
- "day": "2026-11-14",
+ "day": "2026-11-15",
  "cursor": 125,
  "added": [
   {
    "kind": "wiki",
-   "title": "六四事件中的成都市",
-   "url": "https://zh.wikipedia.org/wiki/%E5%85%AD%E5%9B%9B%E4%BA%8B%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%88%90%E9%83%BD%E5%B8%82"
+   "title": "Beijing Coma",
+   "url": "https://en.wikipedia.org/wiki/Beijing_Coma"
   }
  ],
  "errors": [
@@ -16,5 +16,5 @@
  "pending": [],
  "retry": [],
  "srcRetry": [],
- "updated": "2026-11-14"
+ "updated": "2026-11-15"
 }
