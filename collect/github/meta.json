@@ -1,13 +1,7 @@
 {
- "day": "2026-11-15",
+ "day": "2026-11-16",
  "cursor": 125,
- "added": [
-  {
-   "kind": "wiki",
-   "title": "Beijing Coma",
-   "url": "https://en.wikipedia.org/wiki/Beijing_Coma"
-  }
- ],
+ "added": [],
  "errors": [
   "公视新闻网 PNN：六四事件: 0 条",
   "民间历史档案库 China Unofficial Archives: HTTP 403"
@@ -16,5 +10,5 @@
  "pending": [],
  "retry": [],
  "srcRetry": [],
- "updated": "2026-11-15"
+ "updated": "2026-11-16"
 }
