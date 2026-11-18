@@ -1,8 +1,14 @@
 {
- "updated": "2026-11-11",
- "day": "2026-11-11",
+ "updated": "2026-11-17",
+ "day": "2026-11-17",
  "cursor": 125,
- "added": [],
+ "added": [
+  {
+   "kind": "cdt",
+   "title": "【CDT关注】美国之音｜原声带：胡平｜母亲临终前嘱咐我：不要回中国",
+   "url": "https://chinadigitaltimes.net/chinese/733979.html"
+  }
+ ],
  "errors": [
   "公视新闻网 PNN：六四事件: 0 条"
  ],
