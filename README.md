@@ -5,9 +5,8 @@ A directory for collecting, organising and archiving information about the 1989 
 
 网站：https://freedom8964.com （简体 / 繁體 / English）
 
-GitHub Pages 镜像（每天随 GitHub 自动采集更新）：https://freecode100year.github.io/freedom8964.com/
 
-免费 VPN 翻墙浏览器（内置本站离线版）：https://github.com/Freecode100Year/UltraLightBrowser/releases/latest
+免费 VPN 翻墙浏览器（内置本站离线版）：https://dl.freedom8964.com/
 
 ## 结构
 
