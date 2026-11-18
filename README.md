@@ -4,7 +4,7 @@
 A directory for collecting, organising and archiving information about the 1989 Tiananmen Square protests and massacre. Every record points to its original source.
 
 网站：https://freedom8964.com （简体 / 繁體 / English）
-
+源码：https://gitlab.com/sj9292008133/freedom8964.com
 
 免费 VPN 翻墙浏览器（内置本站离线版）：https://dl.freedom8964.com/
 
@@ -18,26 +18,28 @@ A directory for collecting, organising and archiving information about the 1989 
 | `assets/auto.json` | 自动采集的中国数字时代文章 |
 | `build.py` | 生成静态网站到 `dist/` |
 | `worker.js` | Cloudflare Worker，网站的全部自动化都在这里，不依赖任何服务器：每天美东 3:00 采集（Durable Object 闹钟）新闻订阅源、YouTube 官方频道与六四播放列表、媒体专题栏目（`collect/topic_sources.json`）、维基分类（`collect/wiki_sources.json`）、中国数字时代官方订阅源（白天另每 2 小时检查）；X（推特）已于 2026-10-08 停止采集，已收录帖文保留；每条新链接先实际打开核实，打不开次日重试，连续 3 天打不开不收；结果存 KV，访问时插入“最新收录”“媒体专题存档”“维基资料”“中国数字时代”“报道”页；每周六死链检查、每周日提交互联网档案馆；Telegram 日报 |
-| `collect/render.js`、`collect/pages_build.mjs` | 采集结果的网页片段（Worker 与镜像共用）；生成 GitHub Pages 镜像（`_site/`） |
-| `collect/core.js` | 采集核心（来源白名单、关键词过滤、订阅源解析、核实规则），网站 Worker 和 GitHub Actions 共用 |
-| `.github/workflows/backup.yml` | GitHub Actions，每天 UTC 10:30：① 把网站自动采集的数据（`/__export.json`）备份到 `collect/kv-backup/`，网站超过 2 天没采集则运行失败（GitHub 发邮件提醒）；② 在 GitHub 上独立采集一次（`collect/github_collect.mjs`，同一套来源和核实规则，不依赖 Cloudflare），网站和人工资料里还没有的新链接存到 `collect/github/`，最近 30 天的列表见 [`collect/github/README.md`](collect/github/README.md)；③ 用网站源码和两边的采集数据生成并发布 GitHub Pages 镜像站 |
+| `collect/render.js`、`collect/pages_build.mjs` | 采集结果的网页片段（Worker 与镜像共用）；生成镜像站（`_site/`，原 GitHub Pages 镜像已随 GitHub 账号停用） |
+| `collect/core.js` | 采集核心（来源白名单、关键词过滤、订阅源解析、核实规则），网站 Worker 和每日独立采集（`collect/github_collect.mjs`）共用 |
+| `.github/workflows/backup.yml` | **已停用**（GitHub 账号 2026-11-17 停用，记录原流程）。原为 GitHub Actions，每天 UTC 10:30：① 把网站自动采集的数据（`/__export.json`）备份到 `collect/kv-backup/`，网站超过 2 天没采集则运行失败（GitHub 发邮件提醒）；② 在 GitHub 上独立采集一次（`collect/github_collect.mjs`，同一套来源和核实规则，不依赖 Cloudflare），网站和人工资料里还没有的新链接存到 `collect/github/`，最近 30 天的列表见 [`collect/github/README.md`](collect/github/README.md)；③ 用网站源码和两边的采集数据生成并发布 GitHub Pages 镜像站 |
 | `collect/` | 人工整理与旧版工具：`sync_known.py`（改了资料后同步已收录名单并生成来源配置，需重新部署）、`manual/`（核实与并入工具）、`collect.py` 等（旧的服务器端采集，已停用） |
 
 ## 构建与部署
 
-推送页面、资源、采集模板或 Worker 代码到 `main` 后，GitHub Actions 会自动构建并部署 GitHub Pages 镜像与 Cloudflare Worker。每日备份/采集流程也会在采集后更新 GitHub Pages 镜像。
+2026-11-17 起 GitHub 账号停用，源码搬到 GitLab，原来的 GitHub Actions 自动部署和 GitHub Pages 镜像都已停止。网站的每日自动采集本来就在 Cloudflare Worker 里运行，不受影响。
 
-首次启用 Cloudflare 自动部署前，在 GitHub 仓库 **Settings → Secrets and variables → Actions** 中添加：
-
-- `CLOUDFLARE_API_TOKEN`：具有该账户 Workers Scripts 编辑权限的 API Token。
-- `CLOUDFLARE_ACCOUNT_ID`：Cloudflare 账户 ID。
-
-未配置上述 secrets 时，Cloudflare 部署步骤会明确跳过；GitHub Pages 镜像仍会照常部署。手动本地部署仍可运行：
+现在改动页面或代码后，在本地构建并部署：
 
 ```bash
 sudo apt install python3-opencc      # 繁體转换
 python3 build.py                     # 生成 dist/
 npx wrangler deploy                  # 部署到 Cloudflare（静态资源 + Worker）
+```
+
+备份网站自动采集的数据（原来由 GitHub Actions 每天做）：
+
+```bash
+curl -fsS https://freedom8964.com/__export.json -o /tmp/export.json
+# 再按 .github/workflows/backup.yml 里的脚本拆成 collect/kv-backup/*.json 并提交
 ```
 
 Worker 需要的密钥：`TG_BOT_TOKEN`、`TG_CHAT_ID`（采集完成通知，可选）、`COLLECT_KEY`（手动触发采集，可选）。KV 命名空间和 Durable Object 见 `wrangler.jsonc`。
