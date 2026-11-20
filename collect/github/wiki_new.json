@@ -49,5 +49,23 @@
    "added": "2026-11-05",
    "outlet": "维基文库 Wikisource"
   }
+ ],
+ "wiki-region": [
+  {
+   "title": "六四事件中的成都市",
+   "url": "https://zh.wikipedia.org/wiki/%E5%85%AD%E5%9B%9B%E4%BA%8B%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%88%90%E9%83%BD%E5%B8%82",
+   "date": "",
+   "added": "2026-11-14",
+   "outlet": "维基百科 Wikipedia"
+  }
+ ],
+ "wikien-people": [
+  {
+   "title": "Beijing Coma",
+   "url": "https://en.wikipedia.org/wiki/Beijing_Coma",
+   "date": "",
+   "added": "2026-11-15",
+   "outlet": "Wikipedia"
+  }
  ]
 }
